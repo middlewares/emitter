@@ -38,7 +38,7 @@ class Emitter implements MiddlewareInterface
         $range = self::parseContentRange($response->getHeaderLine('Content-Range'));
 
         if (is_array($range) && $range[0] === 'bytes') {
-            $this->sendStreamRange($range, $response);
+            $this->sendStreamRange($range, $response->getBody());
         } else {
             $this->sendStream($response->getBody());
         }
