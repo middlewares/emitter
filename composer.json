@@ -1,21 +1,22 @@
 {
     "name": "middlewares/emitter",
     "type": "library",
-    "description": "A emitter repository for PSR-15 middleware packages",
+    "description": "Middleware to send a PSR-7 response using header() and echo",
     "license": "MIT",
     "keywords": [
         "psr-7",
         "psr-15",
         "middleware",
         "server",
-        "http"
+        "http",
+        "emitter"
     ],
     "homepage": "https://github.com/middlewares/emitter",
     "support": {
         "issues": "https://github.com/middlewares/emitter/issues"
     },
     "require": {
-        "php": "^7.0",
+        "php": "^7.2",
         "psr/http-server-middleware": "^1.0"
     },
     "require-dev": {
