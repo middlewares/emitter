@@ -22,22 +22,22 @@ This package is installable and autoloadable via Composer as [middlewares/emitte
 composer require middlewares/emitter
 ```
 
-## Example
+## Usage
 
 ```php
-$dispatcher = new Dispatcher([
+Dispatcher::run([
     new Middlewares\Emitter(),
     // Here the rest of your middlewares
 ]);
-
-$response = $dispatcher->dispatch(new ServerRequest());
 ```
 
-## Options
+### maxBufferLength
 
-#### `maxBufferLength(int $maxBufferLength)`
+Maximum output buffering size for each iteration. By default is `8192` bytes.
 
-Maximum output buffering size for each iteration. By default is 8192 bytes.
+```php
+$emitter = (new Middlewares\Emitter())->maxBufferLength(512);
+```
 
 ---
 
