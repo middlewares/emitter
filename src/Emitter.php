@@ -49,7 +49,7 @@ class Emitter implements MiddlewareInterface
     /**
      * Sends the Response status line.
      */
-    private function sendStatus(ResponseInterface $response)
+    private function sendStatus(ResponseInterface $response): void
     {
         $version = $response->getProtocolVersion();
         $statusCode = $response->getStatusCode();
@@ -61,7 +61,7 @@ class Emitter implements MiddlewareInterface
     /**
      * Sends all Response headers.
      */
-    private function sendHeaders(ResponseInterface $response)
+    private function sendHeaders(ResponseInterface $response): void
     {
         foreach ($response->getHeaders() as $name => $values) {
             $this->sendHeader($name, $values);
@@ -71,7 +71,7 @@ class Emitter implements MiddlewareInterface
     /**
      * Sends one Response header.
      */
-    private function sendHeader(string $name, array $values)
+    private function sendHeader(string $name, array $values): void
     {
         $name = str_replace('-', ' ', $name);
         $name = ucwords($name);
@@ -85,7 +85,7 @@ class Emitter implements MiddlewareInterface
     /**
      * Streams the Response body 8192 bytes at a time via `echo`.
      */
-    private function sendStream(StreamInterface $stream)
+    private function sendStream(StreamInterface $stream): void
     {
         if ($stream->isSeekable()) {
             $stream->rewind();
