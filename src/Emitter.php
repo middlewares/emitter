@@ -54,8 +54,9 @@ class Emitter implements MiddlewareInterface
         $version = $response->getProtocolVersion();
         $statusCode = $response->getStatusCode();
         $reasonPhrase = $response->getReasonPhrase();
+        $header = sprintf('HTTP/%s %d%s', $version, $statusCode, empty($reasonPhrase) ? '' : " {$reasonPhrase}");
 
-        header(sprintf('HTTP/%s %d%s', $version, $statusCode, $reasonPhrase), true, $statusCode);
+        header($header, true, $statusCode);
     }
 
     /**
