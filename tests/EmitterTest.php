@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Middlewares\Tests;
 
 use Middlewares\Emitter;
@@ -12,7 +14,7 @@ class EmitterTest extends TestCase
     /**
      * @runInSeparateProcess
      */
-    public function testEmitter()
+    public function testEmitter(): void
     {
         $request = Factory::createServerRequest('GET', '/');
 
