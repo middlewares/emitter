@@ -97,7 +97,6 @@ class Emitter implements MiddlewareInterface
 
         if (!$stream->isReadable()) {
             echo $stream;
-
             return;
         }
 
@@ -114,15 +113,16 @@ class Emitter implements MiddlewareInterface
     private function sendStreamRange(array $range, StreamInterface $stream): void
     {
         list($unit, $first, $last, $length) = $range;
+        // @phpstan-ignore-next-line
         $length = $last - $first + 1;
 
         if ($stream->isSeekable()) {
-            $stream->seek($first);
+            $stream->seek((int) $first);
             $first = 0;
         }
 
         if (!$stream->isReadable()) {
-            echo substr($stream->getContents(), $first, $length);
+            echo substr($stream->getContents(), (int) $first, $length);
 
             return;
         }
