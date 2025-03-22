@@ -12,6 +12,7 @@ use RuntimeException;
 
 class Emitter implements MiddlewareInterface
 {
+    /** @var int */
     private $maxBufferLength = 8192;
 
     public function maxBufferLength(int $maxBufferLength): self
@@ -48,7 +49,7 @@ class Emitter implements MiddlewareInterface
 
     /**
      * Sends the Response status line.
-     */
+     *      */
     private function sendStatus(ResponseInterface $response): void
     {
         $version = $response->getProtocolVersion();
@@ -71,6 +72,8 @@ class Emitter implements MiddlewareInterface
 
     /**
      * Sends one Response header.
+     *
+     * @param array<string> $values
      */
     private function sendHeader(string $name, array $values): void
     {
@@ -104,19 +107,23 @@ class Emitter implements MiddlewareInterface
 
     /**
      * Emit a range of the message body.
+     *
+     * @param array<int|string> $range
      */
     private function sendStreamRange(array $range, StreamInterface $stream): void
     {
         list($unit, $first, $last, $length) = $range;
+        // @phpstan-ignore-next-line
         $length = $last - $first + 1;
 
         if ($stream->isSeekable()) {
-            $stream->seek($first);
+            $stream->seek((int) $first);
             $first = 0;
         }
 
         if (!$stream->isReadable()) {
-            echo substr($stream->getContents(), $first, $length);
+            echo substr($stream->getContents(), (int) $first, $length);
+
             return;
         }
 
@@ -137,7 +144,7 @@ class Emitter implements MiddlewareInterface
      * Parse content-range header
      * http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.16
      *
-     * @return null|array [unit, first, last, length];
+     * @return null|array<int|string> [unit, first, last, length];
      */
     private static function parseContentRange(string $header): ?array
     {
